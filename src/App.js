@@ -8,41 +8,54 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { Buffer } from "buffer";
 
+//Necessary to solve an error
 Buffer.from("anything", "base64");
 window.Buffer = window.Buffer || require("buffer").Buffer;
+
+//setting a provider for the connectors
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: 'l6ZPirxmkFBjmMcFPjtd2Jp8zKrhxBCD' }),
+  alchemyProvider({ apiKey: process.env.REACT_APP_API_KEY }),
   publicProvider(),
 ]);
 
-const client = createClient({
-  autoConnect: true,
-  connectors: [
+//setting the connectors with an if clause depending on the client device type
+const isMobile = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/)
+const connectors= [
+  new CoinbaseWalletConnector({
+    chains,
+    options: {
+      appName: 'wagmi',
+    },
+  }),
+  new WalletConnectConnector({
+    chains,
+    options: {
+      qrcode: true,
+    },
+  })
+];
+if(isMobile==null){
+  connectors.push(
     new MetaMaskConnector({ chains }),
-    new CoinbaseWalletConnector({
-      chains,
-      options: {
-        appName: 'wagmi',
-      },
-    }),
-    new WalletConnectConnector({
-      chains,
-      options: {
-        qrcode: true,
-      },
-    }),
     new InjectedConnector({
       chains,
       options: {
         name: 'Injected',
         shimDisconnect: true,
       },
-    }),
-  ],
+    })
+  );
+};
+
+//creating a client with wagmi framework
+const client = createClient({
+  autoConnect: true,
+  connectors,
   provider,
   webSocketProvider,
 });
 
+//rendering the app
 function App() {
   return (
     <WagmiConfig client={client}>
