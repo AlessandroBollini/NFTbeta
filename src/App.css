@@ -28,6 +28,33 @@
   color: #61dafb;
 }
 
+.connectorsBox{
+  text-align: center;
+  color: rgb(238, 202, 227);
+  margin-top: 180px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.connectorButton{
+  width: 25%;
+  height: 65%;
+  text-align: center;
+  border-color: rgb(238, 202, 227);
+  color: rgb(238, 202, 227);
+  background-color: rgb(35, 2, 25);
+  border-radius: 5%;
+}
+
+.connectorButton:hover{
+  background-color: rgb(110, 5, 66);
+}
+
+.data{
+  border-color: rgb(238, 202, 227);
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -1,9 +1,4 @@
-import {
-  WagmiConfig,
-  createClient,
-  defaultChains,
-  configureChains,
-} from 'wagmi';
+import {WagmiConfig,createClient,defaultChains,configureChains} from 'wagmi';
 import { Profile } from './Profile';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -18,7 +13,7 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
   alchemyProvider({ apiKey: 'l6ZPirxmkFBjmMcFPjtd2Jp8zKrhxBCD' }),
   publicProvider(),
-])
+]);
 
 const client = createClient({
   autoConnect: true,
@@ -46,7 +41,7 @@ const client = createClient({
   ],
   provider,
   webSocketProvider,
-})
+});
 
 function App() {
   return (
